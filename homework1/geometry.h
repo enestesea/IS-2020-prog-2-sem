@@ -3,7 +3,7 @@
 #include <vector>
 #include<iostream>
 #include "math.h"
-
+//todo cpp
 using namespace std;
 class Point {
 public:
@@ -35,6 +35,8 @@ public:
 
 class PolygonalChain : public Point {
 public:
+	//todo remove n
+
     int n;
     int t;
     vector <Point> arr;
@@ -59,7 +61,7 @@ public:
     Point getPoint(int i) const {
         return arr[i];
     }
-
+    //todo remove t
     float perimeter() const {
     	if (t==1) {
     		float length = 0;
@@ -105,6 +107,7 @@ public:
         }
     }
     float area() const { // gauss formula
+    	//todo remove double
         float area = 0;
         for (int i = 0; i < n - 1; i++) {
             area += arr[i].x * arr[i + 1].y;
@@ -130,6 +133,7 @@ public:
             arr.push_back(other[i]);
         }
     }
+    //todo without sqrt
     float hasRightAngle() const {
         int check = 0;
         float a, b, c;
@@ -142,6 +146,7 @@ public:
             check = 1;
         }
 
+        //todo return check
         if (check == 1) {
             return true;
         }
@@ -169,11 +174,14 @@ public:
         return height;
     }
 };
+
+//todo area and perimeter
 class RegularPolygon : public Polygon {
 public:
     RegularPolygon() {
         n = 0;
     }
+    //todo constructor fro base class
     RegularPolygon(const int kol, const Point* other) {
     	t = 1;
         n = kol;
