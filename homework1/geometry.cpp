@@ -2,6 +2,7 @@
 #include "geometry.h"
 #include <cmath>
 using namespace std;
+//todo transfer all from h to cpp
 int Point::getX() const {
     return x;
 }
@@ -13,11 +14,13 @@ int PolygonalChain::getN() const {
 }
 int PolygonalChain::perimeter() const {
     int length = 0;
+    //todo int comparing unsinged int
     for (int i = 0; i < arr.size() - 1; i++)
         length += sqrt((arr[i + 1].x - arr[i].x) * (arr[i + 1].x - arr[i].x) + (arr[i + 1].y - arr[i].y) * (arr[i + 1].y - arr[i].y));
     return length;
 }
 int ClosedPolygonalChain::perimeter() const {
+    //todo use perimeter from polygonalChain
     int length = 0;
     for (int i = 0; i < arr.size() - 1; i++)
         length += sqrt((arr[i + 1].x - arr[i].x) * (arr[i + 1].x - arr[i].x) + (arr[i + 1].y - arr[i].y) * (arr[i + 1].y - arr[i].y));
@@ -25,7 +28,7 @@ int ClosedPolygonalChain::perimeter() const {
     return length;
 }
 float Polygon::area() const { // gauss formula
-        //fixed  remove double
+    //todo remove double
     float area = 0;
     for (int i = 0; i < arr.size() - 1; i++) {
         area += arr[i].x * arr[i + 1].y;
@@ -44,14 +47,15 @@ bool Triangle::hasRightAngle() const {
     a = (pow((arr[0].x - arr[1].x), 2) + pow((arr[0].y - arr[1].y), 2));
     b = (pow((arr[1].x - arr[2].x), 2) + pow((arr[1].y - arr[2].y), 2));
     c = (pow((arr[2].x - arr[0].x), 2) + pow((arr[2].y - arr[0].y), 2));
+    //todo return expression
     if ((c == a + b) || (a == b + c) || (b == a + c)) {
         return true;
     }
     else {
         return false;
     }
-    //fixed return check
 };
+//todo function dist between points
 int Trapezoid::height() const {
     int height;
     int S = area();

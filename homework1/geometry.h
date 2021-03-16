@@ -4,7 +4,6 @@
 #include<iostream>
 #define _USE_MATH_DEFINES
 #include <math.h>
-//fixed cpp
 using namespace std;
 
 class Point {
@@ -32,9 +31,10 @@ public:
     int getY() const;
 };
 
+//todo u dont need inheritance here
 class PolygonalChain : public Point {
 public:
-    //fixed remove n
+	//todo make destructor
     vector <Point> arr;
     PolygonalChain() {
         arr.resize(0);
@@ -53,8 +53,7 @@ public:
     }
     Point getPoint(int i) const {
         return arr[i];
-    }
-    //fixed remove t 
+    } 
     virtual int perimeter() const;
     int getN() const;
 };
