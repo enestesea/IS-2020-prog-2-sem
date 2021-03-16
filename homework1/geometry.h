@@ -2,8 +2,9 @@
 #define GEOMETRY_H
 #include <vector>
 #include<iostream>
-#include <cmath>
-//todo cpp
+#define _USE_MATH_DEFINES
+#include <math.h>
+//fixed cpp
 using namespace std;
 
 class Point {
@@ -27,48 +28,45 @@ public:
         x = point.x;
         y = point.y;
     }
-    int getX() const; 
-    int getY() const; 
+    int getX() const;
+    int getY() const;
 };
 
 class PolygonalChain : public Point {
 public:
-    int n;
+    //fixed remove n
     vector <Point> arr;
     PolygonalChain() {
+        arr.resize(0);
     }
-    PolygonalChain(const int kol, const Point* other) {
-        n = kol;
-        for (int i = 0; i < n; i++) {
+    PolygonalChain(const int amount, const Point* other) {
+        for (int i = 0; i < amount; i++) {
             arr.push_back(other[i]);
         }
     }
     PolygonalChain(const PolygonalChain& other) {
-        n = other.n;
         arr = other.arr;
     }
     PolygonalChain& operator = (const PolygonalChain& other) {
-        int n = other.n;
         arr = other.arr;
         return *this;
     }
     Point getPoint(int i) const {
         return arr[i];
     }
-    //todo remove t -fixed
-    virtual int perimeter() const; 
-    int getN() const; 
+    //fixed remove t 
+    virtual int perimeter() const;
+    int getN() const;
 };
 
 class ClosedPolygonalChain : public PolygonalChain {
 public:
     ClosedPolygonalChain() {
-        n = 0;
+        arr.resize(0);
     }
-    int perimeter() const; 
-    ClosedPolygonalChain(const int kol, const Point* other) {
-        n = kol;
-        for (int i = 0; i < n; i++) {
+    int perimeter() const;
+    ClosedPolygonalChain(const int amount, const Point* other) {
+        for (int i = 0; i < amount; i++) {
             arr.push_back(other[i]);
         }
     }
@@ -77,66 +75,53 @@ public:
 class Polygon : public ClosedPolygonalChain {
 public:
     Polygon() {
-        n = 0;
+        arr.resize(0);
     }
-    Polygon(const int kol, const Point* other) {
-        n = kol;
-        for (int i = 0; i < n; i++) {
+    Polygon(const int amount, const Point* other) {
+        for (int i = 0; i < amount; i++) {
             arr.push_back(other[i]);
         }
     }
-    virtual int area() const; 
+    virtual float area() const;
 
 };
 
 class Triangle : public Polygon {
 
 public:
-    Triangle(const int kol, const Point* other) {
-        n = kol;
-        for (int i = 0; i < n; i++) {
+    Triangle(const int amount, const Point* other) {
+        for (int i = 0; i < amount; i++) {
             arr.push_back(other[i]);
         }
     }
-    //todo without sqrt-fixed
-    float hasRightAngle() const; 
+    //fixed without sqrt
+    bool hasRightAngle() const;
 };
 
 class Trapezoid : public Polygon {
 public:
-    Trapezoid(const int kol, const Point* other) {
-        n = kol;
-        for (int i = 0; i < n; i++) {
+    Trapezoid(const int amount, const Point* other) {
+        for (int i = 0; i < amount; i++) {
             arr.push_back(other[i]);
         }
     }
-    int height() const; 
+    int height() const;
 };
 
-//todo area and perimeter-fixed
+//fixed area and perimeter
 class RegularPolygon : public Polygon {
 public:
     RegularPolygon() {
-        n = 0;
+        arr.resize(0);
     }
-    //todo constructor fro base class
-    RegularPolygon operator = (const RegularPolygon& reg) {
-        x = reg.x;
-        y = reg.y;
-        return *this;
-    }
-    RegularPolygon(const RegularPolygon& reg) {
-        x = reg.x;
-        y = reg.y;
-    }
-    RegularPolygon(const int kol, const Point* other) {
-        n = kol;
-        for (int i = 0; i < n; i++) {
+    RegularPolygon(const int amount, const Point* other) {
+        for (int i = 0; i < amount; i++) {
             arr.push_back(other[i]);
         }
     }
     int perimeter() const;
-    int area() const; 
+    float area() const;
 };
 #endif // GEOMETRY_H
+
 
