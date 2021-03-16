@@ -40,7 +40,7 @@ float Polygon::area() const { // gauss formula
 }
 // fixed todo without sqrt
 bool Triangle::hasRightAngle() const {
-    int a, b, c;//Í‚‡‰‡Ú˚ ÒÚÓÓÌ
+    int a, b, c;//sides^2
     a = (pow((arr[0].x - arr[1].x), 2) + pow((arr[0].y - arr[1].y), 2));
     b = (pow((arr[1].x - arr[2].x), 2) + pow((arr[1].y - arr[2].y), 2));
     c = (pow((arr[2].x - arr[0].x), 2) + pow((arr[2].y - arr[0].y), 2));
