@@ -115,7 +115,7 @@ Trapezoid::Trapezoid(const int amount, const Point* other) {
 }
 int Trapezoid::height() const {
     int S = area();
-    return 2*S/(dist(arr[2], arr[1]) + dist(arr[3], arr[0]));
+    return 2 * S/(dist(arr[2], arr[1]) + dist(arr[3], arr[0]));
 }
 RegularPolygon::RegularPolygon() {
     arr.resize(0);
