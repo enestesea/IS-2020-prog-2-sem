@@ -55,7 +55,7 @@ float PolygonalChain::dist(Point p1, Point p2) const {
 int PolygonalChain::perimeter() const {
     int length = 0;
     //fixed int comparing unsinged int
-    for (unsigned int i = 0; i < arr.size() - 1; i++)
+    for (size_t i = 0; i < arr.size() - 1; i++)
         length += dist(arr[i], arr[i + 1]);
     return length;
 }
@@ -83,11 +83,11 @@ Polygon::Polygon(const int amount, const Point* other) {
 float Polygon::area() const { // gauss formula
     //fixed remove double
     int area = 0;
-    for (int i = 0; i < arr.size() - 1; i++) {
+    for (size_t i = 0; i < arr.size() - 1; i++) {
         area += arr[i].x * arr[i + 1].y;
     }
     area += arr[arr.size() - 1].x * arr[0].y;
-    for (int i = 0; i < arr.size() - 1; i++) {
+    for (size_t i = 0; i < arr.size() - 1; i++) {
         area -= arr[i + 1].x * arr[i].y;
     }
     area -= arr[0].x * arr[arr.size() - 1].y;
