@@ -27,7 +27,7 @@ public:
     PolygonalChain(const int amount, const Point* other);     
     PolygonalChain(const PolygonalChain& other); 
     PolygonalChain& operator = (const PolygonalChain& other);
-    ~PolygonalChain();
+    virtual ~PolygonalChain();
     Point getPoint(int i) const; 
     float dist(Point p1, Point p2) const;
     virtual int perimeter() const;
@@ -70,3 +70,4 @@ public:
     float area() const;
 };
 #endif // GEOMETRY_H
+
