@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <cmath>
+#include <limits.h>
 using namespace std;
 
 Polynomial::Polynomial() {
