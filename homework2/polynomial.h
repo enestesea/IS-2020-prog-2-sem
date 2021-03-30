@@ -1,6 +1,7 @@
 #ifndef POLYNOMIAL_H
 #define POLYNOMIAL_H
 #include <iostream>
+#include <limits.h>
 #include <cmath>
 #include <string>
 #include <sstream>
