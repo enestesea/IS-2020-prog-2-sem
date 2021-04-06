@@ -66,6 +66,7 @@ inline ostream& operator <<(ostream& stream, const Polynomial& poly) {
     stream << "";
     return stream;
 }
+//todo cpp realize
 //==
 inline bool operator==(const Polynomial& poly1, const Polynomial& poly2) {
     stringstream p1, p2;
@@ -111,6 +112,7 @@ inline Polynomial operator+=(const Polynomial& poly1, const Polynomial poly2) {
         return p;
     }
 }
+//todo without creating new object
 // -=
 inline Polynomial operator-=(Polynomial& poly1, Polynomial& poly2) {
     poly2 = -poly2;
@@ -130,6 +132,8 @@ inline Polynomial operator *(Polynomial poly, int a) {
         poly.arr[i] *= a;
     return poly;
 }
+//todo copy-paste
+//todo const&
 //* poly* int
 inline Polynomial operator *(int a, Polynomial poly) {
     for (int i = 0; i < poly.max - poly.min + 1; i++)
@@ -166,6 +170,7 @@ inline Polynomial operator *(const Polynomial poly1, const Polynomial poly2) {
     }
 }
 
+//todo you dont need it
 //*=
 inline Polynomial operator*=(Polynomial& poly, int a) {
     poly = poly * a;
@@ -192,6 +197,7 @@ inline Polynomial operator/(Polynomial poly, int a) {
     Polynomial new_poly(min_, max_, temp);
     return new_poly;
 }
+//todo / from /=
 // /=
 inline void operator/=(Polynomial& poly, double a) {
     poly = poly / a;

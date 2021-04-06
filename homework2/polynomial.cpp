@@ -32,6 +32,7 @@ Polynomial::~Polynomial() {
 Polynomial& Polynomial::operator =(const Polynomial& copy) {
 	max = copy.max;
 	min = copy.min;
+	//todo memory-leak
 	arr = new int[max - min + 1];
 	for (int i = 0; i < max - min + 1; i++) {
 		arr[i] = copy.arr[i];
