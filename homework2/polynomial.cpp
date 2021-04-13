@@ -29,11 +29,11 @@ Polynomial::Polynomial(const Polynomial& copy) {
 Polynomial::~Polynomial() {
     delete[]arr;
 };
+//todo check if copy==this
 Polynomial& Polynomial::operator =(const Polynomial& copy) {
     delete[] arr;
     maxp = copy.maxp;
     minp = copy.minp;
-    // fixed memory-leak
     arr = new int[maxp - minp + 1];
     for (int i = 0; i < maxp - minp + 1; i++) {
         arr[i] = copy.arr[i];
@@ -167,6 +167,7 @@ Polynomial Polynomial::operator += (const Polynomial poly2){
     maxp = _max;
     return *this;
 };
+//todo -1 * poly2 cerating new object
 Polynomial Polynomial::operator -= (const Polynomial poly2){
     *this += -1 * poly2;
     return *this;
@@ -181,6 +182,7 @@ Polynomial operator-(const Polynomial poly1, const Polynomial poly2) {
     poly -= poly2;
     return poly;
 };
+//todo const int-> int
 Polynomial operator *(const Polynomial poly1, const int a) {
     Polynomial poly = poly1;
     return poly *= a;
@@ -189,6 +191,7 @@ Polynomial operator *(const int a, const Polynomial poly1) {
     Polynomial poly = poly1;
     return poly *= a;
 };
+//todo * from *=
 Polynomial operator *(const Polynomial poly1, const Polynomial poly2) {
     if ((poly1.maxp == 0 && poly1.minp == 0) || (poly2.maxp == 0 && poly2.minp == 0)) {
         if (poly1.maxp == 0 && poly1.minp == 0)
@@ -223,6 +226,7 @@ Polynomial Polynomial::operator*=(const int a) {
     }
     return *this;
 };
+//todo / from /=
 Polynomial operator/(Polynomial poly, const int a) {
     poly /= a;
     int* temp;

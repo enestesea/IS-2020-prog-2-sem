@@ -20,7 +20,6 @@ public:
     void resize(int min_, int max_);
     float get(int n);
     friend ostream& operator <<(ostream& stream, const Polynomial& poly);
-//fixed cpp realize
 //==
     friend bool operator==(const Polynomial& poly1, const Polynomial& poly2);
 //!=
@@ -31,7 +30,6 @@ public:
     friend Polynomial operator-(const Polynomial& poly);
 // +=
     Polynomial operator += (const Polynomial poly2);
-//fixed without creating new object
 // -=
     Polynomial operator -= (const Polynomial poly2);
 //+
@@ -41,8 +39,8 @@ public:
 //* int*poly
     friend Polynomial operator *(const Polynomial poly1, const int a);
 //fixed copy-paste
-//fixed const&
 //* poly* int
+//todo const&???
     friend Polynomial operator *(const int a, const Polynomial poly1);
 //poly*poly
     friend Polynomial operator *(const Polynomial poly1, const Polynomial poly2);
