@@ -8,17 +8,17 @@ using namespace std;
 Polynomial::Polynomial() {
     maxp = 0;
     minp = 0;
-    arr = new int[1]{ 0 };
+    arr = new int[1]{0};
 };
-Polynomial::Polynomial(int min_, int max_, int* coefficents) {
+Polynomial::Polynomial(int min_, int max_, int* arr_) {
     minp = min_;
     maxp = max_;
     arr = new int[max_ - min_ + 1];
     for (int i = 0; i < maxp - minp + 1; i++) {
-        arr[i] = coefficents[i];
+        arr[i] = arr_[i];
     }
 };
-Polynomial::Polynomial(const Polynomial& copy) {
+Polynomial::Polynomial(const Polynomial &copy) {
     minp = copy.minp;
     maxp = copy.maxp;
     arr = new int[maxp - minp + 1];
@@ -29,8 +29,10 @@ Polynomial::Polynomial(const Polynomial& copy) {
 Polynomial::~Polynomial() {
     delete[]arr;
 };
-//todo check if copy==this
-Polynomial& Polynomial::operator =(const Polynomial& copy) {
+//fixed check if copy==this
+Polynomial& Polynomial::operator =(const Polynomial &copy) {
+    if(this == &copy)
+        return *this;
     delete[] arr;
     maxp = copy.maxp;
     minp = copy.minp;
@@ -83,7 +85,7 @@ void Polynomial::resize(int min_, int max_) {
     maxp = max_;
     minp = min_;
 };
-ostream& operator <<(ostream& stream, const Polynomial& poly) {
+ostream& operator <<(ostream& stream, const Polynomial &poly) {
         int max_ = poly.maxp;
         if (poly.maxp == 0 && poly.minp == 0) {
         stream << 0;
@@ -129,25 +131,27 @@ ostream& operator <<(ostream& stream, const Polynomial& poly) {
         stream << "";
         return stream;
 }
-bool operator==(const Polynomial& poly1, const Polynomial& poly2) {
-    stringstream p1, p2;
-    p1 << poly1;
-    p2 << poly2;
-    return p1.str() == p2.str();
-};
-operator !=(const Polynomial& poly1, const Polynomial& poly2) {
+bool operator == (const Polynomial &poly1, const Polynomial &poly2){
+    int min_ = min(poly1.minp, poly2.minp);
+    int max_ = max(poly1.maxp, poly2.maxp);
+    for(int i = min_; i <= max_; i++){
+        if(poly1[i] != poly2[i]) return false;
+    }
+    return true;
+}
+operator !=(const Polynomial &poly1, const Polynomial &poly2) {
     return !(poly1 == poly2);
 };
-Polynomial operator+(const Polynomial& poly) {
+Polynomial operator+(const Polynomial &poly) {
     return poly;
 };
-Polynomial operator-(const Polynomial& poly) {
+Polynomial operator-(const Polynomial &poly) {
     int temp[poly.maxp - poly.minp + 1];
     for (int i = 0; i < (poly.maxp - poly.minp) + 1; i++)
         temp[i] = poly.arr[i] * (-1);
     return Polynomial(poly.minp, poly.maxp, temp);
 };
-Polynomial Polynomial::operator += (const Polynomial poly2){
+Polynomial& Polynomial::change (const Polynomial& poly2, int n){
     int _min = min(minp, poly2.minp);
     int _max = max(maxp, poly2.maxp);
     int* _coef = new int[_max - _min + 1];
@@ -157,7 +161,7 @@ Polynomial Polynomial::operator += (const Polynomial poly2){
         temp += arr[i + _min - minp];
     }
     if(i+_min >= poly2.minp && i+_min <= poly2.maxp){
-    temp += poly2.arr[i + _min - poly2.minp];
+    temp += n*poly2.arr[i + _min - poly2.minp];
     }
     _coef[i] = temp;
     }
@@ -167,10 +171,13 @@ Polynomial Polynomial::operator += (const Polynomial poly2){
     maxp = _max;
     return *this;
 };
-//todo -1 * poly2 cerating new object
-Polynomial Polynomial::operator -= (const Polynomial poly2){
-    *this += -1 * poly2;
-    return *this;
+
+Polynomial& Polynomial:: operator += (const Polynomial& poly2){
+    return change(poly2, 1);
+}
+//fixed -1 * poly2 cerating new object
+Polynomial& Polynomial::operator -= (const Polynomial& poly2){
+    return change(poly2,-1);
 };
 Polynomial operator+(const Polynomial poly1, const Polynomial poly2) {
    Polynomial poly = poly1;
@@ -182,17 +189,23 @@ Polynomial operator-(const Polynomial poly1, const Polynomial poly2) {
     poly -= poly2;
     return poly;
 };
-//todo const int-> int
-Polynomial operator *(const Polynomial poly1, const int a) {
+//fixed const int-> int
+//fixed * from *=
+Polynomial& Polynomial::operator*=(int a) {
+    for(int i = 0; i < maxp - minp + 1; i++){
+            arr[i] *= a;
+    }
+    return *this;
+};
+Polynomial operator *(const Polynomial &poly1, int a) {
     Polynomial poly = poly1;
     return poly *= a;
 };
-Polynomial operator *(const int a, const Polynomial poly1) {
+Polynomial operator *(int a, const Polynomial &poly1) {
     Polynomial poly = poly1;
     return poly *= a;
 };
-//todo * from *=
-Polynomial operator *(const Polynomial poly1, const Polynomial poly2) {
+Polynomial operator *(const Polynomial &poly1, const Polynomial &poly2) {
     if ((poly1.maxp == 0 && poly1.minp == 0) || (poly2.maxp == 0 && poly2.minp == 0)) {
         if (poly1.maxp == 0 && poly1.minp == 0)
             return poly1;
@@ -220,38 +233,18 @@ Polynomial operator *(const Polynomial poly1, const Polynomial poly2) {
         return Polynomial(min_, max_, temp);
     }
 };
-Polynomial Polynomial::operator*=(const int a) {
+//fixed / from /=
+Polynomial operator /(const Polynomial &poly1, int a){
+    Polynomial poly = poly1;
+    return poly /= a;
+}
+Polynomial& Polynomial::operator /=(int a){
     for(int i = 0; i < maxp - minp + 1; i++){
-            arr[i] *= a;
+        arr[i] /= a;
     }
     return *this;
 };
-//todo / from /=
-Polynomial operator/(Polynomial poly, const int a) {
-    poly /= a;
-    int* temp;
-    int min_ = poly.minp;
-    int max_ = poly.maxp;
-    while (poly.arr[min_ - poly.minp] == 0) {
-        min_++;
-    }
-    while (poly.arr[max_ - poly.minp] == 0 && max_ != poly.minp) {
-        max_--;
-    }
-    temp = new int[max_ - min_ + 1];
-    for (int i = min_; i <= max_; i++) {
-        temp[i - min_] = poly.arr[i - poly.minp];
-    }
-    Polynomial new_poly(min_, max_, temp);
-    return new_poly;
-};
-Polynomial Polynomial::operator /=(const int a){
-    for(int i = 0; i < maxp - minp + 1; i++){
-        arr[i]/=a;
-    }
-    return *this;
-};
-istream& operator >>(istream& stream, Polynomial& poly) {
+istream& operator >>(istream& stream, Polynomial &poly) {
     string poly_;
     int* arr_;
     int max_, min_;
