@@ -141,8 +141,10 @@ public:
         };
 
     T& operator [] (int i){
-        if (size == 0 || i >= size)
-            throw out_of_range(" out of range");
+        if (i >= size)
+            throw out_of_range("out of range");
+        if (size == 0)
+            throw out_of_range("empty");
         return elements[(begin_ + i) % capacity];
         };
 
