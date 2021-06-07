@@ -4,8 +4,8 @@
 #include <iostream>
 #include <iterator>
 using namespace std;
-//todo warnings
-//todo exception informatoin
+//fixed warnings
+//fixed exception informatoin
 template <typename T>
 class CircularBuffer;
 
