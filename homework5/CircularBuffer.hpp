@@ -2,10 +2,10 @@
 #define CIRCULARBUFFER_HPP
 
 #include <iostream>
-#include <iterator>
+
 using namespace std;
-//todo warnings
-//todo exception informatoin
+//fixed warnings (I use -Wall -Wextra and have no warnings, those warnings from note may be because of a constructor without parameters but there are parametres)
+//fixed exception informatoin
 template <typename T>
 class CircularBuffer;
 
@@ -21,7 +21,8 @@ public:
     using difference_type = T;
     using pointer = T*;
     using reference = T&;
-    Iterator(T *current, T *elements, T capacity) : current(current), elements(elements), capacity(capacity) {};
+    Iterator(T *current, T *elements, T capacity) : current(current), elements(elements), capacity(capacity) {
+        };
 
     Iterator& operator = (const Iterator &other) {
         current = other.current;
@@ -140,14 +141,15 @@ public:
         return elements[(begin_ + i) % capacity];
         };
 
-    T& operator [] (int i){
-        if (i >= size)
-            throw out_of_range("out of range");
+    T &operator[](int i) {
         if (size == 0)
-            throw out_of_range("empty");
+            throw out_of_range("Error: buffer is empty ");
+        if (i >= size)
+            throw out_of_range(
+                    "Error: index is out of range of [0; " + to_string(size - 1) +
+                    "] because your index is " + to_string(i));
         return elements[(begin_ + i) % capacity];
-        };
-
+    };
     T first(){
         return elements[begin_];
         };
@@ -192,7 +194,7 @@ public:
         size--;
     };
 
-    Iterator <T> begin() const {
+   Iterator <T> begin() const {
         return Iterator <T>(elements + begin_, elements, capacity);
     };
 
